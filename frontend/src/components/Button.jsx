@@ -2,6 +2,10 @@ import React from 'react'
 
 export const Button = (props) => {
   return (
-    <div>props.btnName</div>
+    <div>
+      <a href={props.href}>
+        {props.btnName}
+      </a>
+    </div>
   )
 }
