@@ -9,7 +9,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "browserless": "^9.8.0",
+    "cheerio": "^1.0.0-rc.12",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "got": "^11.8.6",
+    "pretty": "^2.0.0",
+    "puppeteer": "^19.5.2"
   }
 }
