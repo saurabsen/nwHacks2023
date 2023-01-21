@@ -21,7 +21,7 @@ export const Capture = () => {
         <Typography>English Translation</Typography>
         <TextareaAutosize minRows={3}></TextareaAutosize>
         <LanguageSelect />
-        <Typography>English Translation</Typography>
+        <Typography>Translated</Typography>
         <TextareaAutosize minRows={3}></TextareaAutosize>
 
       </Box>
