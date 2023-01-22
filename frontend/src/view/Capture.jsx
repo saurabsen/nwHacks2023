@@ -73,7 +73,7 @@ export const Capture = () => {
     //  Loop and detect hands
     setInterval(() => {
       detect(net);
-    }, 500);
+    }, 200);
   };
   const detect = async (net) => {
     // Check data is available
@@ -209,20 +209,28 @@ export const Capture = () => {
           </Box>
         </Grid>
         <Grid item sm={6}>
-          <Box>
-            <Typography>English Translation</Typography>
-            <TextareaAutosize
-              minRows={3}
-              value={engTextOutput}
-            ></TextareaAutosize>
-            <FormControl style={{ width: "100%" }}>
-              <LanguageSelect idName="Capture" label="Target Language" sourceText={engTextOutput} sourceLang="EN" translateText={translateText} />
-            </FormControl>
-            <Typography>Translated</Typography>
-            <TextareaAutosize
-              minRows={3}
-              value={translatedText}
-            ></TextareaAutosize>
+          <Box sx={{pt: '13px', display: 'flex', flexDirection: 'column', gap: '2rem'}}>
+            <Box>
+              <Typography>English Translation</Typography>
+              <TextareaAutosize
+                minRows={3}
+                value={engTextOutput}
+                style={{width: '100%'}}
+              ></TextareaAutosize>
+            </Box>
+            <Box>
+              <FormControl style={{ width: "100%" }}>
+                <LanguageSelect idName="Capture" label="Target Language" sourceText={engTextOutput} sourceLang="EN" translateText={translateText} />
+              </FormControl>
+            </Box>
+            <Box>
+              <Typography>Translated</Typography>
+              <TextareaAutosize
+                minRows={3}
+                value={translatedText}
+                style={{width: '100%'}}
+              ></TextareaAutosize>
+            </Box>
           </Box>
           <Button variant="contained" onClick={resetText}>Reset</Button>
         </Grid>
