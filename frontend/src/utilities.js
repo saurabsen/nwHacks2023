@@ -28,3 +28,15 @@ export const drawRect = (boxes, classes, scores, threshold, imgWidth, imgHeight,
       }
   }
 }
+
+// Define text identification function
+export const getText = (boxes, classes, scores, threshold, imgWidth, imgHeight, ctx)=>{
+  for(let i=0; i<=boxes.length; i++){
+      if(boxes[i] && classes[i] && scores[i]>threshold){
+          // Extract variables
+          const text = classes[i]
+          // console.log(labelMap[text].name)
+          return labelMap[text].name
+      }
+  }
+}

@@ -1,17 +1,36 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { Button, TextareaAutosize, Select, MenuItem, Typography, FormControl, InputLabel, Grid } from '@mui/material'
 import { LanguageSelect } from '../components/LanguageSelect'
 import { Box } from '@mui/system'
 import * as tf from "@tensorflow/tfjs";
 import Webcam from "react-webcam";
-import { drawRect } from '../utilities'
+import { drawRect, getText } from '../utilities'
 
 import './Capture.css'
 
 export const Capture = () => {
 
   const navigator = useNavigate();
+  const [engText, setEngText] = useState([]);
+  const [engTextOutput, setEngTextOutput] = useState('');
+
+  // Add string to engText if its not found in engText
+  const handleEngTextUpdate = (newText) => {
+    if (newText) {
+      const doesntHaveText = !engText.includes(newText)
+      console.log(doesntHaveText, newText, engText)
+      if (doesntHaveText) {
+        setEngText(current => [...current, newText])
+      }
+    }
+  }
+
+  useEffect(() => {
+    setEngTextOutput(engText.join(' '))
+
+    console.log(engText)
+  }, [engText])
 
   // CAMERA AND TENSORFLOW
 
@@ -53,15 +72,27 @@ export const Capture = () => {
       const casted = resized.cast("int32");
       const expanded = casted.expandDims(0);
       const obj = await net.executeAsync(expanded);
-      console.log(obj);
+      // console.log(obj);
       const boxes = await obj[1].array();
       const classes = await obj[2].array();
       const scores = await obj[4].array();
+
       // Draw mesh
       const ctx = canvasRef.current.getContext("2d");
       // 5. TODO - Update drawing utility
       // drawSomething(obj, ctx)
       requestAnimationFrame(() => {
+        handleEngTextUpdate(
+          getText(
+            boxes[0],
+            classes[0],
+            scores[0],
+            0.8,
+            videoWidth,
+            videoHeight,
+            ctx
+          )
+        );
         drawRect(
           boxes[0],
           classes[0],
@@ -87,9 +118,12 @@ export const Capture = () => {
     <>
       <Button onClick={() => {navigator(-1)}}>Go back</Button>
       Capture
-      <Grid container sx={{width: '100%', paddingLeft: '1rem', paddingRight: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem'}}>
-        <Grid item md={6} sx={{border: '1px solid black', width: '640px', minHeight: '480px'}}>
-          <Box sx={{position: 'relative'}}>
+      <Grid container sm={12} spacing={2} sx={{width: '100%', paddingLeft: '1rem', paddingRight: '1rem'}}>
+        <Grid item sm={6} sx={{minHeight: '480px'}}>
+          <Typography>Test</Typography>
+          {/* Add stop camera button */}
+          {/* Add translate button */}
+          <Box sx={{border: '1px solid black', position: 'relative', width: '100%', height: '100%'}}>
             <Webcam
               ref={webcamRef}
               muted={true}
@@ -99,7 +133,7 @@ export const Capture = () => {
                 right: 0,
                 textAlign: "center",
                 zindex: 9,
-                width: 640,
+                width: '100%',
                 height: 480,
             }}
             />
@@ -111,16 +145,16 @@ export const Capture = () => {
                 right: 0,
                 textAlign: "center",
                 zindex: 8,
-                width: 640,
+                width: '100%',
                 height: 480,
               }}
             />
 
           </Box>
         </Grid>
-        <Grid item md={6}>
+        <Grid item sm={6}>
           <Typography>English Translation</Typography>
-          <TextareaAutosize minRows={3}></TextareaAutosize>
+          <TextareaAutosize minRows={3} value={engTextOutput}></TextareaAutosize>
           <FormControl style={{width: '100%'}}>
             <LanguageSelect idName="Capture" />
           </FormControl>
