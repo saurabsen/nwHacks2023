@@ -10,9 +10,7 @@ import { useState } from 'react';
 
 export const LanguageSelect = (props) => {
   const deepElLangDict = {
-    EN: 'English (unspecified variant for backward compatibility; please select EN-GB or EN-US instead)',
-    'EN-GB': 'English (British)',
-    'EN-US': 'English (American)',
+    EN: 'English',
     BG: 'Bulgarian',
     CS: 'Czech',
     DA: 'Danish',
@@ -30,10 +28,7 @@ export const LanguageSelect = (props) => {
     LV: 'Latvian',
     NL: 'Dutch',
     PL: 'Polish',
-    PT: 'Portuguese (unspecified variant for backward compatibility; please select PT-BR or PT-PT instead)',
-    'PT-BR': 'Portuguese (Brazilian)',
-    'PT-PT':
-      'Portuguese (all Portuguese varieties excluding Brazilian Portuguese)',
+    PT: 'Portuguese',
     RO: 'Romanian',
     RU: 'Russian',
     SK: 'Slovak',

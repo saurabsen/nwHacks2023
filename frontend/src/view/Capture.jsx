@@ -76,7 +76,7 @@ export const Capture = () => {
     //  Loop and detect hands
     setInterval(() => {
       detect(net);
-    }, 200);
+    }, 20);
   };
   const detect = async (net) => {
     // Check data is available
