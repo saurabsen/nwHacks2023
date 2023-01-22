@@ -32,11 +32,11 @@ export const Translate = () => {
       const res = await fetch(`${process.env.REACT_APP_HOST_BACKEND}/api/webscrape/${text}`);
       const data = await res.json();
 
-      setVideoArray(current => [...current, {
+      setVideoArray(current => [{
         thumbnail: 'https://via.placeholder.com/500/FFA500/FFFFFF',
         url: data.video_url,
         imgAlt: 'Not found'
-      }]);
+      }, ...current]);
     }
 
     for (let text of translatedTextArray) {
