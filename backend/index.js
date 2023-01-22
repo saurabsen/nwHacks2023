@@ -46,7 +46,7 @@ app.get('/api/webscrape/:word', (req, res) => {
 
 app.get('/api/webscrape/', (req, res) => {
   res.json({ 'video_url': 'No word input' });
-})
+});
 
 app.get('/', (req, res) => {
     res.status(200).send('Backend works');
