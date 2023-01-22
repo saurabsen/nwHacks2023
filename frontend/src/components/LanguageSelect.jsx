@@ -1,6 +1,6 @@
 import React from 'react'
 import { Select, MenuItem, InputLabel, Box, FormControl } from '@mui/material'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export const LanguageSelect = (props) => {
   const deepElLangDict = {
@@ -37,22 +37,24 @@ export const LanguageSelect = (props) => {
     ZH: "Chinese (simplified)",
   }
 
-  const [age, setAge] = useState('');
+  const [langCode, setLangCode] = useState('');
 
   const handleChange = (e) => {
-    setAge(e.target.value)
+    setLangCode(e.target.value)
   }
+
+  useEffect(() => {console.log(langCode)},[langCode])
 
   return (
     <>
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Age</InputLabel>
+          <InputLabel id="demo-simple-select-label">Language</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={age}
-            label="Age"
+            value={langCode}
+            label="Language"
             onChange={handleChange}
           >
             {
