@@ -1,25 +1,41 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  Button,
-  TextareaAutosize,
-  Select,
-  MenuItem,
-  Typography,
-  FormControl,
-  InputLabel,
-  Grid
-} from "@mui/material";
-import { LanguageSelect } from "../components/LanguageSelect";
-import { Box } from "@mui/system";
-import "./Capture.css";
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Button, TextareaAutosize, Select, MenuItem, Typography, FormControl, InputLabel } from '@mui/material'
+import { LanguageSelect } from '../components/LanguageSelect'
+import { Box } from '@mui/system'
+import './Capture.css'
+import { useEffect } from 'react'
 
 export const Translate = () => {
-  const [sourceText, setSourceText] = useState("");
+  const [sourceText, setSourceText] = useState("")
+  const [translatedText, settranslatedText] = useState("")
+  const [translatedTextArray, setTranslatedTextArray] = useState([])
+  const [videoArray, setVideoArray] = useState([])
 
   const navigator = useNavigate();
 
-  // const fetchVideos
+  const translateText = (text) => {
+    settranslatedText(text);
+  }
+
+  const translateToASL = () => {
+    const fetchVideos = async (text) => {
+      const res = await fetch(`${process.env.REACT_APP_HOST_BACKEND}/api/webscrape/${text}`);
+      const data = await res.json();
+
+      setVideoArray(current => [...current, data.video_url]);
+    }
+
+    for (let text of translatedTextArray) {
+      fetchVideos(text);
+    }
+  }
+
+  useEffect(() => {
+    const words = translatedText.split(" ").filter(w => w !== '')
+    setTranslatedTextArray(words)
+    setVideoArray([])
+  }, [translatedText])
 
   return (
     <>
@@ -31,40 +47,23 @@ export const Translate = () => {
         Go back
       </Button>
       Translate
-      <Grid
-        container
-        md={12}
-        spacing={2}
-        sx={{
-          px: '1rem'
-        }}
-      >
-        <Grid item sm={12} md={6} sx={{display: 'flex', flexDirection: 'column', gap: '2rem'}}>
-          <Box>
-            <Typography>Translate from</Typography>
-            <FormControl style={{ width: "100%" }}>
-              <LanguageSelect
-                idName="Capture"
-                sourceText={sourceText}
-                targetLang="EN"
-              />
-            </FormControl>
-            <TextareaAutosize minRows={3} style={{width: '100%'}}></TextareaAutosize>
+
+      <Box style={{paddingLeft: '1rem', paddingRight: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+        <FormControl style={{width: '100%'}}>
+          <LanguageSelect idName="Capture" label="Source Language" sourceText={sourceText} targetLang="EN" translateText={translateText} />
+        </FormControl>
+        <TextareaAutosize minRows={3} onChange={(e) => setSourceText(e.target.value)} value={sourceText}></TextareaAutosize>
+        <Button variant="contained" onClick={translateToASL}>Translate to ASL</Button>
+        <TextareaAutosize minRows={3} value={translatedText}></TextareaAutosize>
+        {videoArray.map((video, i) => 
+          <Box key={i} style={{border: '1px solid black', width: '640px', height: '360px'}}>
+            <video autoPlay playsInline controls>
+              <source src={video} />
+            </video>
           </Box>
-          <Box>
-            <Typography>English translation</Typography>
-            <TextareaAutosize minRows={3} style={{width: '100%'}}></TextareaAutosize>
-          </Box>
-          <Button variant="contained">Translate to ASL</Button>
-        </Grid>
-        <Grid item sm={12} md={6}>
-          <Box
-            sx={{ border: "1px solid black", width: "100%", minHeight: "360px" }}
-          >
-            <video id="deviceCamera" autoPlay playsInline></video>
-          </Box>
-        </Grid>
-      </Grid>
+        )}
+      </Box>
+
     </>
   );
 };

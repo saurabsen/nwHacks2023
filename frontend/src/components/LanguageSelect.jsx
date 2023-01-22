@@ -46,7 +46,7 @@ export const LanguageSelect = (props) => {
 
   const [langCode, setLangCode] = useState('');
 
-  const { label, sourceText, sourceLang, translateText } = props;
+  const { label, sourceText, sourceLang, translateText, targetLang } = props;
 
   const handleChange = (e) => {
     setLangCode(e.target.value)
@@ -62,10 +62,10 @@ export const LanguageSelect = (props) => {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({
-          'auth_key': '1457cf22-a7b4-548b-c3a9-8b38e6f1b29b:fx',
+          'auth_key': process.env.REACT_APP_DEEPL_API_KEY,
           'text': sourceText,
-          'target_lang': langCode,
-          'source_lang': sourceLang
+          'target_lang': targetLang || langCode,
+          'source_lang': sourceLang || langCode
         }),
       })
       
@@ -76,7 +76,7 @@ export const LanguageSelect = (props) => {
     if (sourceText) {
       translate()
     }
-  }, [langCode, sourceText, sourceLang, translateText])
+  }, [langCode, sourceText, sourceLang, translateText, targetLang])
 
   return (
     <>
