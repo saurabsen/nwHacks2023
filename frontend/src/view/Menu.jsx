@@ -20,6 +20,9 @@ export const Menu = () => {
           <Link to={"/translate/"}>
             <Button variant="contained">Translate ASL</Button>
           </Link>
+          <Link to={"/translate/"}>
+            <Button variant="contained">Letters to ASL</Button>
+          </Link>
         </Box>
       </Paper>
     </>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
-import { Button, TextareaAutosize, Select, MenuItem, Typography } from '@mui/material'
+import { Button, TextareaAutosize, Select, MenuItem, Typography, FormControl, InputLabel } from '@mui/material'
 import { LanguageSelect } from '../components/LanguageSelect'
 import { Box } from '@mui/system'
 import './Capture.css'
@@ -20,7 +20,9 @@ export const Capture = () => {
         <Button variant="contained">Capture</Button>
         <Typography>English Translation</Typography>
         <TextareaAutosize minRows={3}></TextareaAutosize>
-        <LanguageSelect />
+        <FormControl style={{width: '100%'}}>
+          <LanguageSelect idName="Capture" />
+        </FormControl>
         <Typography>Translated</Typography>
         <TextareaAutosize minRows={3}></TextareaAutosize>
 
