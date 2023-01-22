@@ -49,7 +49,7 @@ app.get('/api/webscrape/', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-    res.status(200).send('OK');
+    res.status(200).send('Backend works');
 });
 
 // Listen
