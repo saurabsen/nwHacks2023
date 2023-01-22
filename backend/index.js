@@ -16,7 +16,7 @@ app.use(cors());
 app.get('/api/webscrape/:word', (req, res) => {
   const { word } = req.params;
 
-  // Pull HTML source code
+  // Pull HTML source code from signingsavvy
   got(`https://www.signingsavvy.com/search/${word}`).then(result => {
     // Scrape video url from HTML
     let $ = cheerio.load(result.body);
