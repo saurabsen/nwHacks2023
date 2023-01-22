@@ -32,7 +32,7 @@ export const Menu = () => {
           <Link to={"/translate/"} style={{width: '100%', textDecoration: 'none'}}>
             <Button variant="contained" sx={{width: '100%'}}>Translate ASL</Button>
           </Link>
-          <Link to={"/translate/"} style={{width: '100%', textDecoration: 'none'}}>
+          <Link to={"/letters/"} style={{width: '100%', textDecoration: 'none'}}>
             <Button variant="contained" sx={{width: '100%'}}>Letters to ASL</Button>
           </Link>
         </Box>
