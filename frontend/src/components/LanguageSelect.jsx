@@ -44,24 +44,50 @@ export const LanguageSelect = (props) => {
     ZH: 'Chinese (simplified)',
   };
 
-  const [age, setAge] = useState('');
+  const [langCode, setLangCode] = useState('');
+
+  const { label, sourceText, sourceLang, translateText } = props;
 
   const handleChange = (e) => {
-    setAge(e.target.value);
-  };
+    setLangCode(e.target.value)
+  }
+
+  useEffect(() => {
+    console.log(langCode)
+
+    const translate = async () => {
+      const res = await fetch('https://api-free.deepl.com/v2/translate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          'auth_key': '1457cf22-a7b4-548b-c3a9-8b38e6f1b29b:fx',
+          'text': sourceText,
+          'target_lang': langCode,
+          'source_lang': sourceLang
+        }),
+      })
+      
+      const data = await res.json()
+      translateText(data.translations[0].text)
+    }
+
+    if (sourceText) {
+      translate()
+    }
+  }, [langCode, sourceText, sourceLang, translateText])
 
   return (
     <>
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
-          <InputLabel id='demo-simple-select-label'>
-            Age
-          </InputLabel>
+          <InputLabel id="demo-simple-select-label">{ label || 'Language' }</InputLabel>
           <Select
-            labelId='demo-simple-select-label'
-            id='demo-simple-select'
-            value={age}
-            label='Age'
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={langCode}
+            label={ label || 'Language' }
             onChange={handleChange}
           >
             {Object.keys(deepElLangDict).map((key) => (
