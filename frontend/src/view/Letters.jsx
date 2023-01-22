@@ -8,6 +8,7 @@ import {
   Typography,
   FormControl,
   InputLabel,
+  Grid
 } from '@mui/material';
 import { LetterSelect } from '../components/LetterSelect';
 import { Box } from '@mui/system';
@@ -26,28 +27,34 @@ export const Letters = () => {
         Go back
       </Button>
       Translate a Letter
-      <Box
-        style={{
-          paddingLeft: '1rem',
-          paddingRight: '1rem',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
+      <Grid container
+        spacing={2}
+        sm={12}
+        sx={{
+          mt: '1rem',
+          px: '1rem',
         }}
       >
-        <Typography>
-          Select a Letter to Translate
-        </Typography>
-        <FormControl style={{ width: '100%' }}>
-          <LetterSelect idName='Capture' />
-        </FormControl>
+        <Grid item
+          sm={12}
+          md={6}
+        >
+          <Typography>
+            Select a Letter to Translate
+          </Typography>
+          <FormControl style={{ width: '100%' }}>
+            <LetterSelect idName='Capture' />
+          </FormControl>
+        </Grid>
         {/* <TextareaAutosize minRows={3}></TextareaAutosize>
         <Typography>English Translation</Typography>
         <TextareaAutosize minRows={3}></TextareaAutosize> */}
-        <Box
-          style={{
+        <Grid item
+          sm={12}
+          md={6}
+          sx={{
             border: '1px solid black',
-            width: '640px',
+            width: '100%',
             height: '240px',
           }}
         >
@@ -56,9 +63,9 @@ export const Letters = () => {
             autoPlay
             playsInline
           ></video>
-        </Box>
+        </Grid>
         {/* <Button variant='contained'>Capture</Button> */}
-      </Box>
+      </Grid>
     </>
   );
 };
