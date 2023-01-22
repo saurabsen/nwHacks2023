@@ -1,12 +1,11 @@
 import React from 'react'
-import { Select, MenuItem } from '@mui/material'
+import { Select, MenuItem, InputLabel, Box, FormControl } from '@mui/material'
+import { useState } from 'react'
 
-export const LanguageSelect = () => {
+export const LanguageSelect = (props) => {
   const deepElLangDict = {
     EN: "English (unspecified variant for backward compatibility; please select EN-GB or EN-US instead)",
     "EN-GB": "English (British)",
-    "PT-BR": "Portuguese (Brazilian)",
-    "PT-PT": "Portuguese (all Portuguese varieties excluding Brazilian Portuguese)",
     "EN-US": "English (American)",
     BG: "Bulgarian",
     CS: "Czech",
@@ -26,6 +25,8 @@ export const LanguageSelect = () => {
     NL: "Dutch",
     PL: "Polish",
     PT: "Portuguese (unspecified variant for backward compatibility; please select PT-BR or PT-PT instead)",
+    "PT-BR": "Portuguese (Brazilian)",
+    "PT-PT": "Portuguese (all Portuguese varieties excluding Brazilian Portuguese)",
     RO: "Romanian",
     RU: "Russian",
     SK: "Slovak",
@@ -36,11 +37,33 @@ export const LanguageSelect = () => {
     ZH: "Chinese (simplified)",
   }
 
+  const [age, setAge] = useState('');
+
+  const handleChange = (e) => {
+    setAge(e.target.value)
+  }
+
   return (
-    <Select label="Select language" value="default">
-      <MenuItem value="default">Select Language</MenuItem>
-      <MenuItem>English</MenuItem>
-      <MenuItem>Chinese</MenuItem>
-    </Select>
+    <>
+      <Box sx={{ minWidth: 120 }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Age</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={age}
+            label="Age"
+            onChange={handleChange}
+          >
+            {
+              Object.keys(deepElLangDict).map((key) =>
+                <MenuItem value={key} key={key}>{deepElLangDict[key]}</MenuItem>
+              )
+            }
+          </Select>
+        </FormControl>
+      </Box>
+
+    </>
   )
 }
