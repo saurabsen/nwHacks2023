@@ -9,6 +9,8 @@ export const Translate = () => {
 
   const navigator = useNavigate();
 
+  // const fetchVideos
+
   return (
     <>
       <Button onClick={() => {navigator(-1)}}>Go back</Button>
@@ -20,12 +22,10 @@ export const Translate = () => {
           <LanguageSelect idName="Capture" />
         </FormControl>
         <TextareaAutosize minRows={3}></TextareaAutosize>
-        <Typography>English Translation</Typography>
-        <TextareaAutosize minRows={3}></TextareaAutosize>
-        <Box style={{border: '1px solid black', width: '640px', height: '240px'}}>
+        <Button variant="contained">Translate to ASL</Button>
+        <Box style={{border: '1px solid black', width: '640px', height: '360px'}}>
           <video id="deviceCamera" autoPlay playsInline></video>
         </Box>
-        <Button variant="contained">Capture</Button>
 
       </Box>
 

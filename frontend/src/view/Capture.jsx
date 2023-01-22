@@ -22,7 +22,12 @@ export const Capture = () => {
   const navigator = useNavigate();
   const [engText, setEngText] = useState([]);
   const [engTextOutput, setEngTextOutput] = useState("");
+  const [translatedText, setTranslatedText] = useState("");
   const [cameraToggle, setCameraToggle] = useState(false);
+
+  const translateText = (text) => {
+    setTranslatedText(text)
+  }
 
   // Add string to engText if its not found in engText
   const handleEngTextUpdate = (newText) => {
@@ -37,6 +42,8 @@ export const Capture = () => {
 
   const resetText = () => {
     setEngText([]);
+    setEngTextOutput("");
+    setTranslatedText("");
   };
 
   useEffect(() => {
@@ -209,10 +216,13 @@ export const Capture = () => {
               value={engTextOutput}
             ></TextareaAutosize>
             <FormControl style={{ width: "100%" }}>
-              <LanguageSelect idName="Capture" />
+              <LanguageSelect idName="Capture" label="Target Language" sourceText={engTextOutput} sourceLang="EN" translateText={translateText} />
             </FormControl>
             <Typography>Translated</Typography>
-            <TextareaAutosize minRows={3}></TextareaAutosize>
+            <TextareaAutosize
+              minRows={3}
+              value={translatedText}
+            ></TextareaAutosize>
           </Box>
           <Button variant="contained" onClick={resetText}>Reset</Button>
         </Grid>
