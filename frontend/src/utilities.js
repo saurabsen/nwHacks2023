@@ -21,10 +21,12 @@ export const drawRect = (boxes, classes, scores, threshold, imgWidth, imgHeight,
           ctx.font = '30px Arial'         
           
           // DRAW!!
-          ctx.beginPath()
-          ctx.fillText(labelMap[text]['name'] + ' - ' + Math.round(scores[i]*100)/100, x*imgWidth, y*imgHeight-10)
-          ctx.rect(x*imgWidth, y*imgHeight, width*imgWidth/2, height*imgHeight/1.5);
-          ctx.stroke()
+          if (text !== 5) {
+            ctx.beginPath()
+            ctx.fillText(labelMap[text]['name'] + ' - ' + Math.round(scores[i]*100)/100, x*imgWidth, y*imgHeight-10)
+            ctx.rect(x*imgWidth, y*imgHeight, width*imgWidth/2, height*imgHeight/1.5);
+            ctx.stroke()
+          }
       }
   }
 }
@@ -35,8 +37,11 @@ export const getText = (boxes, classes, scores, threshold, imgWidth, imgHeight, 
       if(boxes[i] && classes[i] && scores[i]>threshold){
           // Extract variables
           const text = classes[i]
+          const returnText = labelMap[text].name
           // console.log(labelMap[text].name)
-          return labelMap[text].name
+          if (returnText !== 'No') {
+            return returnText
+          }
       }
   }
 }

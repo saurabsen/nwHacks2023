@@ -39,7 +39,13 @@ export const Translate = () => {
 
   return (
     <>
-      <Button onClick={() => {navigator(-1)}}>Go back</Button>
+      <Button
+        onClick={() => {
+          navigator(-1);
+        }}
+      >
+        Go back
+      </Button>
       Translate
 
       <Box style={{paddingLeft: '1rem', paddingRight: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem'}}>
@@ -59,5 +65,5 @@ export const Translate = () => {
       </Box>
 
     </>
-  )
-}
+  );
+};
