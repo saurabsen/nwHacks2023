@@ -47,8 +47,11 @@ export const Capture = () => {
   };
 
   useEffect(() => {
-    setEngTextOutput(engText.join(" "));
-    console.log(engText);
+    const textSet = new Set(engText);
+    let outText = ''
+    textSet.forEach(text => {outText = outText + ' ' + text})
+    setEngTextOutput(outText.toLowerCase());
+    // console.log(engText);
   }, [engText]);
 
   // Camera Toggle
