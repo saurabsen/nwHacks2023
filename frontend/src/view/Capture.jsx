@@ -1,36 +1,55 @@
-import React, { useRef, useEffect, useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
-import { Button, TextareaAutosize, Select, MenuItem, Typography, FormControl, InputLabel, Grid } from '@mui/material'
-import { LanguageSelect } from '../components/LanguageSelect'
-import { Box } from '@mui/system'
+import React, { useRef, useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import {
+  Button,
+  TextareaAutosize,
+  Typography,
+  FormControl,
+  Grid,
+  FormGroup,
+  FormControlLabel,
+  Switch,
+} from "@mui/material";
+import { LanguageSelect } from "../components/LanguageSelect";
+import { Box } from "@mui/system";
 import * as tf from "@tensorflow/tfjs";
 import Webcam from "react-webcam";
-import { drawRect, getText } from '../utilities'
+import { drawRect, getText } from "../utilities";
 
-import './Capture.css'
+import "./Capture.css";
 
 export const Capture = () => {
-
   const navigator = useNavigate();
   const [engText, setEngText] = useState([]);
-  const [engTextOutput, setEngTextOutput] = useState('');
+  const [engTextOutput, setEngTextOutput] = useState("");
+  const [cameraToggle, setCameraToggle] = useState(false);
 
   // Add string to engText if its not found in engText
   const handleEngTextUpdate = (newText) => {
     if (newText) {
-      const doesntHaveText = !engText.includes(newText)
-      console.log(doesntHaveText, newText, engText)
+      const doesntHaveText = !engText.includes(newText);
+      console.log(doesntHaveText, newText, engText);
       if (doesntHaveText) {
-        setEngText(current => [...current, newText])
+        setEngText((current) => [...current, newText]);
       }
     }
-  }
+  };
+
+  const resetText = () => {
+    setEngText([]);
+  };
 
   useEffect(() => {
-    setEngTextOutput(engText.join(' '))
+    setEngTextOutput(engText.join(" "));
+    console.log(engText);
+  }, [engText]);
 
-    console.log(engText)
-  }, [engText])
+  // Camera Toggle
+  const handleCameraToggle = () => {
+    setCameraToggle(!cameraToggle);
+  };
+
+  // useEffect(() => {console.log(cameraToggle)},[cameraToggle])
 
   // CAMERA AND TENSORFLOW
 
@@ -47,7 +66,7 @@ export const Capture = () => {
     //  Loop and detect hands
     setInterval(() => {
       detect(net);
-    }, 16.7);
+    }, 500);
   };
   const detect = async (net) => {
     // Check data is available
@@ -116,54 +135,88 @@ export const Capture = () => {
 
   return (
     <>
-      <Button onClick={() => {navigator(-1)}}>Go back</Button>
+      <Button
+        onClick={() => {
+          navigator(-1);
+        }}
+      >
+        Go back
+      </Button>
       Capture
-      <Grid container sm={12} spacing={2} sx={{width: '100%', paddingLeft: '1rem', paddingRight: '1rem'}}>
-        <Grid item sm={6} sx={{minHeight: '480px'}}>
-          <Typography>Test</Typography>
+      <Grid
+        container
+        sm={12}
+        spacing={2}
+        sx={{ width: "100%", paddingLeft: "1rem", paddingRight: "1rem" }}
+      >
+        <Grid item sm={6} sx={{ minHeight: "480px" }}>
           {/* Add stop camera button */}
           {/* Add translate button */}
-          <Box sx={{border: '1px solid black', position: 'relative', width: '100%', height: '100%'}}>
-            <Webcam
-              ref={webcamRef}
-              muted={true}
-              style={{
-                position: "absolute",
-                left: 0,
-                right: 0,
-                textAlign: "center",
-                zindex: 9,
-                width: '100%',
-                height: 480,
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch checked={cameraToggle} onChange={handleCameraToggle} />
+              }
+              label="Camera"
+            />
+          </FormGroup>
+          <Box
+            sx={{
+              border: "1px solid black",
+              position: "relative",
+              width: "100%",
+              height: "100%",
             }}
-            />
-            <canvas
-              ref={canvasRef}
-              style={{
-                position: "absolute",
-                left: 0,
-                right: 0,
-                textAlign: "center",
-                zindex: 8,
-                width: '100%',
-                height: 480,
-              }}
-            />
-
+          >
+            {cameraToggle ? (
+              <>
+                <Webcam
+                  ref={webcamRef}
+                  muted={true}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    textAlign: "center",
+                    zindex: 9,
+                    width: "100%",
+                    height: 480,
+                  }}
+                />
+                <canvas
+                  ref={canvasRef}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    textAlign: "center",
+                    zindex: 8,
+                    width: "100%",
+                    height: 480,
+                  }}
+                />
+              </>
+            ) : (
+              <></>
+            )}
           </Box>
         </Grid>
         <Grid item sm={6}>
-          <Typography>English Translation</Typography>
-          <TextareaAutosize minRows={3} value={engTextOutput}></TextareaAutosize>
-          <FormControl style={{width: '100%'}}>
-            <LanguageSelect idName="Capture" />
-          </FormControl>
-          <Typography>Translated</Typography>
-          <TextareaAutosize minRows={3}></TextareaAutosize>
-
+          <Box>
+            <Typography>English Translation</Typography>
+            <TextareaAutosize
+              minRows={3}
+              value={engTextOutput}
+            ></TextareaAutosize>
+            <FormControl style={{ width: "100%" }}>
+              <LanguageSelect idName="Capture" />
+            </FormControl>
+            <Typography>Translated</Typography>
+            <TextareaAutosize minRows={3}></TextareaAutosize>
+          </Box>
+          <Button variant="contained" onClick={resetText}>Reset</Button>
         </Grid>
       </Grid>
-
     </>
-  )
-}
+  );
+};
