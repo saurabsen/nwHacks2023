@@ -159,7 +159,7 @@ export const Capture = () => {
         spacing={2}
         sx={{ width: "100%", paddingLeft: "1rem", paddingRight: "1rem" }}
       >
-        <Grid item sm={6} sx={{ minHeight: "480px" }}>
+        <Grid item sm={12} md={6}>
           {/* Add stop camera button */}
           {/* Add translate button */}
           <FormGroup>
@@ -175,7 +175,7 @@ export const Capture = () => {
               border: "1px solid black",
               position: "relative",
               width: "100%",
-              height: "100%",
+              minHeight: "480px",
             }}
           >
             {cameraToggle ? (
@@ -192,7 +192,7 @@ export const Capture = () => {
                     width: "100%",
                     height: 480,
                   }}
-                />
+                  />
                 <canvas
                   ref={canvasRef}
                   style={{
@@ -211,7 +211,7 @@ export const Capture = () => {
             )}
           </Box>
         </Grid>
-        <Grid item sm={6}>
+        <Grid item sm={12} md={6} sx={{mt: {sm: '2rem'}}}>
           <Box sx={{pt: '13px', display: 'flex', flexDirection: 'column', gap: '2rem'}}>
             <Box>
               <Typography>English Translation</Typography>
