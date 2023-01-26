@@ -8,7 +8,7 @@ import "../assets/font.css";
 
 export const Menu = () => {
   return (
-    <>
+    <Box sx={{mx: {xs: '1rem', sm: 'auto'}}}>
       <Box
         sx={{
           width: "300px",
@@ -45,7 +45,6 @@ export const Menu = () => {
             gap: "1rem",
           }}
         >
-          {/* Camera icon */}
           <Link
             to={"/capture/"}
             style={{ width: "100%", textDecoration: "none" }}
@@ -54,7 +53,6 @@ export const Menu = () => {
               Record ASL
             </Button>
           </Link>
-          {/* keyboard icon */}
           <Link
             to={"/translate/"}
             style={{ width: "100%", textDecoration: "none" }}
@@ -63,16 +61,8 @@ export const Menu = () => {
               Translate ASL
             </Button>
           </Link>
-          <Link
-            to={"/letters/"}
-            style={{ width: "100%", textDecoration: "none" }}
-          >
-            <Button variant="contained" sx={{ width: "100%" }}>
-              Letters to ASL
-            </Button>
-          </Link>
         </Box>
       </Paper>
-    </>
+    </Box>
   );
 };
